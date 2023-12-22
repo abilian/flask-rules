@@ -1,28 +1,34 @@
-[tool]
 [tool.poetry]
-name = "flask_rules"
+name = "flask-rules"
 version = "0.1.0"
-homepage = "https://github.com/sfermigier/flask_rules"
-description = "Top-level package for Flask-Rules."
+homepage = "https://github.com/abilian/flask-rules"
+description = "Access rules for Flask applications, inspired by django-rules."
 authors = ["Abilian SAS <sf@abilian.com>"]
-readme = "README.rst"
+readme = "README.md"
+
+# Original project:
+# url="http://github.com/dfunckt/django-rules",
+# author="Akis Kesoglou",
+# author_email="akiskesoglou@gmail.com",
+
 classifiers=[
     'Development Status :: 2 - Pre-Alpha',
     'Intended Audience :: Developers',
     'Natural Language :: English',
     'Programming Language :: Python :: 3',
-    'Programming Language :: Python :: 3.8',
-    'Programming Language :: Python :: 3.9',
+    'Programming Language :: Python :: 3.10',
+    'Programming Language :: Python :: 3.11',
+    'Programming Language :: Python :: 3.12',
 ]
+
 packages = [
-    { include = "flask_rules", from = "src" },
+    { include = "rules", from = "src" },
     { include = "tests", format = "sdist" },
 ]
 
-
 [tool.poetry.dependencies]
-python = ">=3.9,<4"
-
+python = "^3.10"
+flask = "^3.0.0"
 
 [tool.poetry.group.dev.dependencies]
 ## Standard cruft
@@ -31,7 +37,6 @@ abilian-devtools = "*"
 # Cruft (project templates management)
 cruft = "*"
 toml = "*"
-
 ## /standard cruft
 
 [build-system]
@@ -40,12 +45,21 @@ build-backend = "poetry.core.masonry.api"
 
 # ---
 
+[tool.black]
+target-version = ['py310']
+
 [tool.isort]
 profile = "black"
+known_flask = "flask"
+known_first_party = ['flask-rules']
+sections = ['FUTURE', 'STDLIB', 'FLASK', 'THIRDPARTY', 'FIRSTPARTY', 'LOCALFOLDER']
+skip = ['.git', '__pycache__', '.venv']
 
 # ---
 
-# pyproject.toml
+[tool.pytest]
+python_files = "test_*.py"
+
 [tool.pytest.ini_options]
 filterwarnings = [
 #    'ignore:.*contextfunction.*:DeprecationWarning',
@@ -60,29 +74,6 @@ testpaths = [
 # ---
 
 [tool.ruff]
-select = [
-    "F",
-    "E",
-    "C90",
-    "I",
-    "UP",
-    "N",
-    "YTT",
-    "B",
-    "A",
-    "C4",
-    "ICN",
-    "Q",
-    "S",
-    "BLE",
-    "RET",
-    "SIM",
-    "TID",
-    "RUF",
-    "PLC", "PLE", "PLR", "PLW",
-]
-# Add later: "ANN", "ERA"...
-
 ignore = [
     "S101",  # Use of `assert` detected
     "I001",  # Import block is un-sorted or un-formatted (WHY!?)

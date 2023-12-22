@@ -1,3 +1,10 @@
+/OLD/
+/.venv/
+/.tox/
+/.nox/
+
+# From the original cruft file (nost of it is useless):
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
